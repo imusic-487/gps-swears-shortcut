@@ -41,6 +41,11 @@ def main() -> None:
     OUTPUT_FILE.write_bytes(source)
 
     written = OUTPUT_FILE.read_bytes()
+    if len(written) != len(source):
+        raise RuntimeError(
+            f"copy size differs from line.txt: wrote {len(written)} bytes, "
+            f"source is {len(source)} bytes"
+        )
     if written != source:
         offset = next(
             i for i, (a, b) in enumerate(zip(written, source)) if a != b
